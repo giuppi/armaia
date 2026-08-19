@@ -1,0 +1,1457 @@
+/* =========================================
+   1. VARIABILI E BASE (Resets & Accessibilità)
+   ========================================= */
+:root {
+    --primary: #1e3a8a;
+    --primary-light: #3b82f6;
+    --accent: #f59e0b;
+    --bg-app: #f1f5f9;
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --success: #10b981;
+    --error: #ef4444;
+    --ui-icon-size: 1.05em;
+    --ui-icon-stroke: 1.9;
+    --ui-icon-gap: 0.35rem;
+}
+
+.ui-icon {
+    width: var(--ui-icon-size);
+    height: var(--ui-icon-size);
+    margin-right: var(--ui-icon-gap);
+    vertical-align: -0.15em;
+    flex-shrink: 0;
+}
+
+.ui-icon--tight {
+    margin-right: 0;
+}
+
+.ui-icon--lg {
+    --ui-icon-size: 1.35em;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+}
+
+/* Accessibilità Globale: Gestione del Focus */
+:focus {
+    outline: none;
+    /* Rimuove il focus nativo obsoleto */
+}
+
+:focus-visible {
+    outline: 3px solid var(--primary-light);
+    outline-offset: 2px;
+    border-radius: 4px;
+    transition: outline-offset 0.2s ease;
+}
+
+/* Componenti interattivi con focus accentuato */
+.sidebar-menu button:focus-visible,
+.btn-toggle:focus-visible,
+.btn-action:focus-visible,
+.toast-close:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Utility per Screen Reader (WCAG) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* =========================================
+   2. LAYOUT GLOBALE E NAVIGAZIONE (App & Sidebar)
+   ========================================= */
+.app-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.sidebar-header h1 {
+    font-size: 1.5rem;
+    margin: 0 0 0.2rem 0;
+}
+
+.sidebar-header small {
+    color: #bfdbfe;
+}
+
+.sidebar-menu {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+}
+
+.sidebar-menu button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid transparent;
+    color: #e2e8f0;
+    padding: 0.9rem 1rem;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.sidebar-menu button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu button.active {
+    background-color: var(--primary-light);
+    color: white;
+    border-color: #60a5fa;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.content-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: var(--bg-app);
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* =========================================
+   3. COMPONENTI UI CONDIVISI (Card, Bottoni, Form)
+   ========================================= */
+.card-panel {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.card-panel h2 {
+    margin-top: 0;
+    color: var(--primary);
+    border-bottom: 2px solid var(--bg-app);
+    padding-bottom: 0.8rem;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: var(--border-color);
+    margin: 2rem 0;
+}
+
+.btn-action {
+    background-color: var(--primary-light);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.btn-action:hover:not(:disabled) {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+.btn-action:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Variante secondaria (reset, annulla) */
+.btn-secondary {
+    background-color: var(--text-muted);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #475569;
+    transform: translateY(-1px);
+}
+
+/* Variante full-width (usata in modal e form) */
+.btn-action--full {
+    width: 100%;
+    margin-top: 0.75rem;
+}
+
+.btn-logout {
+    background-color: var(--error);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    width: 100%;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #dc2626;
+}
+
+/* Strutture Form Condivise */
+.form-group {
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* =========================================
+   4. MODULI SPECIFICI E PANNELLI
+   ========================================= */
+
+/* --- AUTH SCREEN --- */
+.auth-screen {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+}
+
+.auth-container {
+    background: var(--bg-card);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-container h2 {
+    color: var(--primary);
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.form-group.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-group.checkbox label {
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+.btn-toggle {
+    background: none;
+    border: none;
+    color: var(--primary-light);
+    font-weight: 600;
+    margin-top: 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-toggle:hover {
+    text-decoration: underline;
+}
+
+/* Elemento <select> stilizzato come gli input del design system */
+.form-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background: white;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Variante compatta per celle di tabella (edit mode) */
+.form-select--inline,
+.input--inline {
+    padding: 0.3rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    background: white;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.input--inline {
+    width: 100%;
+    box-sizing: border-box;
+    cursor: text;
+}
+
+.form-select--inline:focus,
+.input--inline:focus {
+    outline: none;
+    border-color: var(--primary-light);
+}
+
+/* card-panel con spaziatura extra inferiore */
+.card-panel--spaced {
+    margin-bottom: 2rem;
+}
+
+/* --- TABELLE E STATUS BADGE --- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.data-table th,
+.data-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background-color: var(--bg-app);
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Colonna copertina centrata */
+.data-table .td-cover {
+    width: 70px;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+/* Modifica copertina in linea nella tabella */
+.td-cover-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.btn-change-cover {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: #eff6ff;
+    border: 1px solid var(--primary-light);
+    border-radius: 4px;
+    padding: 0.2rem 0.45rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.btn-change-cover:hover {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.new-cover-badge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    background: var(--success);
+    color: #ffffff;
+    font-size: 0.62rem;
+    font-weight: bold;
+    padding: 1px 4px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Miniatura copertina nella tabella */
+.book-thumb {
+    width: 45px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: transform 0.15s ease;
+}
+
+.book-thumb:hover,
+.book-thumb:focus {
+    transform: scale(1.08);
+    outline: 2px solid var(--primary-light);
+    outline-offset: 2px;
+}
+
+/* Cella azioni con bottoni affiancati */
+.td-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Valore ISBN in font monospace */
+.isbn-value {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.status-badge.pending {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.status-badge.active {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.status-badge.rejected {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.status-badge.loaned {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-badge.requested {
+    background-color: #ede9fe;
+    color: #7c3aed;
+}
+
+/* Variante badge di stato usata nel modal (con margine superiore) */
+.status-badge--modal {
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+/* Card per il prestito in uscita (LoanManager) */
+.loan-outbound-card {
+    padding: 1rem;
+    background: var(--bg-app);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-light);
+}
+
+.loan-outbound-card p {
+    margin: 0 0 0.5rem 0;
+}
+
+.loan-outbound-card p:last-of-type {
+    margin-bottom: 1rem;
+}
+
+/* --- MAPPA GEOSPAZIALE --- */
+.map-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: calc(100vh - 4rem);
+}
+
+.map-controls {
+    background: var(--bg-card);
+    padding: 1.25rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* --- SELETTORE MODALITÀ GEOGRAFICA (Segmented Control) --- */
+.geo-mode-switcher {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    background: var(--bg-app);
+    padding: 0.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.geo-mode-btn {
+    flex: 1;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.geo-mode-btn:hover {
+    color: var(--text-main);
+}
+
+.geo-mode-btn.active {
+    background: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(30, 58, 138, 0.2);
+}
+
+/* --- PANNELLO RAGGIO CIRCOLARE --- */
+.radius-panel {
+    background: var(--bg-app);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    margin-top: 0.5rem;
+}
+
+/* --- PANNELLO BBOX A 2 PASSI (Ricerca per area compatto) --- */
+.bbox-panel {
+    background: var(--bg-app);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem 0.9rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.bbox-actions-bar {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.btn-capture-viewport {
+    flex: 1;
+    background: #ffffff;
+    color: var(--primary);
+    border: 1.5px solid var(--primary-light);
+    padding: 0.55rem 0.8rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-capture-viewport:hover {
+    background: #eff6ff;
+    border-color: var(--primary);
+}
+
+.btn-bbox-submit {
+    flex: 1;
+    background: var(--primary-light);
+    color: #ffffff;
+    border: none;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.25);
+    white-space: nowrap;
+}
+
+.btn-bbox-submit:hover:not(:disabled) {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+.btn-bbox-submit:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Striscia coordinate orizzontale compatta a chip */
+.bbox-coords-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.45rem;
+}
+
+.bbox-coord-chip {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+}
+
+.bbox-coord-chip:focus-within {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.coord-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--bg-app);
+    padding: 0.35rem 0.5rem;
+    border-right: 1px solid var(--border-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.bbox-coord-chip input {
+    width: 100%;
+    border: none;
+    padding: 0.35rem 0.45rem;
+    font-size: 0.82rem;
+    font-family: monospace;
+    color: var(--text-main);
+    background: transparent;
+    box-sizing: border-box;
+}
+
+.bbox-coord-chip input:focus {
+    outline: none;
+    background: #eff6ff;
+}
+
+.bbox-helper-text {
+    font-size: 0.78rem;
+    line-height: 1.35;
+    margin: 0;
+}
+
+.map-controls label {
+    font-weight: 600;
+    color: var(--primary);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary-light);
+}
+
+.leaflet-container {
+    width: 100%;
+    min-height: 500px;
+    flex-grow: 1;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    z-index: 1;
+}
+
+/* ---- EFFETTO SONAR SUI MARKER DEI LIBRI ---- */
+.radar-ring {
+    animation: radar-pulse 3s ease-in-out infinite;
+}
+
+@keyframes radar-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+.coord-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* --- PROFILO UTENTE --- */
+.profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.info-badge {
+    background: var(--bg-app);
+    padding: 1.2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+}
+
+.info-badge span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-badge strong {
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+/* --- DASHBOARD STATISTICHE --- */
+.chart-bar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.3rem;
+}
+
+.chart-bar-lane {
+    flex-grow: 1;
+    background-color: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    height: 18px;
+}
+
+.chart-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease-out;
+}
+
+.bar-percentage-out {
+    font-weight: bold;
+    color: var(--text-main);
+    min-width: 40px;
+    text-align: right;
+    font-size: 0.9rem;
+}
+
+/* --- COMPONENTI VARI --- */
+.book-cover-placeholder {
+    width: 45px;
+    height: 65px;
+    background: var(--bg-app);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto;
+}
+
+/* =========================================
+   5. SISTEMA DI NOTIFICHE TOAST (Z-Index Elevato)
+   ========================================= */
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    z-index: 9999;
+    animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    max-width: 350px;
+    border-left: 5px solid transparent;
+}
+
+.toast-notification.success {
+    border-left-color: var(--success);
+}
+
+.toast-notification.error {
+    border-left-color: var(--error);
+}
+
+.toast-icon {
+    font-size: 1.2rem;
+}
+
+.toast-content {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* =========================================
+   6. NUOVI COMPONENTI
+   ========================================= */
+/* --- MODAL DETTAGLIO LIBRO (BookDetail) --- */
+.modal-overlay,
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5000;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 2rem;
+    animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close-btn,
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--bg-app);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    z-index: 1;
+}
+
+.modal-close-btn:hover,
+.close-btn:hover {
+    background: var(--error);
+    color: white;
+    border-color: var(--error);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+    background: var(--primary-light);
+}
+
+.badge-busy {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    background-color: #fee2e2;
+    color: #dc2626;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.modal-body {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.modal-cover-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.modal-cover-img {
+    width: 100%;
+    max-width: 180px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.modal-cover-placeholder {
+    width: 180px;
+    height: 260px;
+    background: var(--bg-app);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    border: 2px dashed var(--border-color);
+}
+
+.modal-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-title {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.4rem;
+    line-height: 1.3;
+    padding-right: 2rem;
+    /* Spazio per il pulsante chiusura */
+}
+
+/* Tabella metadati */
+.book-metadata-list {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.metadata-row {
+    display: grid;
+    grid-template-columns: minmax(130px, 170px) 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.95rem;
+}
+
+.metadata-row dt {
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    padding-top: 2px;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+}
+
+.metadata-row dd {
+    margin: 0;
+    color: var(--text-main);
+}
+
+/* Sezione azioni contatto */
+.modal-actions-section {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-actions-section h3 {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+.btn-contact {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--bg-app);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-sizing: border-box;
+}
+
+.btn-contact:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* --- BARRA DI RICERCA TESTUALE --- */
+.search-bar-form {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s;
+    min-width: 200px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.search-btn {
+    padding: 0.75rem 1.2rem;
+    flex-shrink: 0;
+}
+
+/* Pannello risultati ricerca testuale */
+.search-results-panel {
+    margin-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+}
+
+.search-results-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem;
+    border-radius: 8px;
+    background: var(--bg-app);
+    transition: background 0.15s;
+}
+
+.search-result-item:hover {
+    background: #e2e8f0;
+}
+
+.search-result-thumb {
+    width: 36px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.search-result-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.search-result-info strong {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-result-info span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.search-result-info small {
+    font-size: 0.78rem;
+    color: var(--primary);
+}
+
+/* --- UPLOAD COPERTINA CON ANTEPRIMA --- */
+.cover-upload-area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cover-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 170px;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--bg-app);
+}
+
+.cover-upload-label:hover {
+    border-color: var(--primary-light);
+    background: #eff6ff;
+}
+
+.cover-upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.cover-upload-placeholder span:first-child {
+    font-size: 2rem;
+}
+
+.cover-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- FORM A 2 COLONNE --- */
+.grid-form-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* --- METRICHE DASHBOARD (griglia 5 card) --- */
+.metrics-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.metric-box {
+    background: var(--bg-app);
+    padding: 1.2rem;
+    border-radius: 10px;
+    border-top: 4px solid var(--primary-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-align: center;
+}
+
+.metric-box span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-box strong {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.chart-row {
+    margin-bottom: 1rem;
+}
+
+.chart-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+}
+
+/* =========================================
+   7. RESPONSIVE DESIGN (Media Queries per Mobile)
+   ========================================= */
+@media screen and (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 1rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        flex-shrink: 0;
+    }
+
+    .sidebar-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sidebar-header h1 {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+
+    .sidebar-menu {
+        margin-top: 1rem;
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        gap: 0.5rem;
+        scrollbar-width: none;
+    }
+
+    .sidebar-menu::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sidebar-menu button {
+        white-space: nowrap;
+        padding: 0.6rem 0.9rem;
+        font-size: 0.9rem;
+    }
+
+    .sidebar-footer {
+        margin-top: 0.5rem;
+    }
+
+    .content-area {
+        padding: 0;
+    }
+
+    .content-wrapper {
+        padding: 1rem;
+    }
+
+    .coord-form,
+    .isbn-fetch-block {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .coord-form input,
+    .isbn-fetch-block input,
+    .coord-form select,
+    .btn-action {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .map-layout {
+        height: 65vh;
+    }
+
+    .leaflet-container {
+        min-height: 400px;
+    }
+
+    .metrics-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .toast-notification {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+        max-width: none;
+    }
+
+    /* Modal responsivo su mobile */
+    .modal-body {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+
+    .modal-cover-col {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .modal-cover-img,
+    .modal-cover-placeholder {
+        width: 100px;
+        height: 140px;
+        max-width: 100px;
+    }
+
+    .metadata-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+
+    /* Griglia 2 col → 1 col su mobile */
+    .grid-form-2col {
+        grid-template-columns: 1fr;
+    }
+
+    /* Ricerca testuale su mobile */
+    .search-bar-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,23 @@
+@keyframes sonar-pulse {
+    0% {
+        transform: scale(0.6);
+        opacity: 0.9;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.4;
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+.radar-ring {
+    transform-origin: center;
+    animation: sonar-pulse 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    will-change: transform, opacity;
+    pointer-events: none;
+}
